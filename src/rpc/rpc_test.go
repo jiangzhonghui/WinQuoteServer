@@ -2,7 +2,6 @@ package rpc
 
 import (
 	"testing"
-
 	"github.com/davyxu/cellnet"
 	"github.com/davyxu/cellnet/example"
 	"github.com/davyxu/cellnet/proto/gamedef"
