@@ -5,13 +5,25 @@ import (
 	"log"
 	"os"
 	"strings"
+	"gopkg.in/mgo.v2"
+	"gopkg.in/mgo.v2/bson"
 )
+
+type StockIntraDayTrad struct {
+	Code string
+	Name string
+	CurTime string
+	Price string
+	Count int
+}
 
 func check(e error) {
 	if e != nil {
 		panic(e)
 	}
 }
+
+var collection *mgo.Collection
 
 func main() {
 
@@ -20,7 +32,14 @@ func main() {
 	CheckError(err)
 	defer netListen.Close()
 
+	//连接mongodb
+	session, err :=mgo.Dial("localhost:11270")
+	CheckError(err)
+	defer session.Close()
 
+	session.SetMode(mgo.Monotonic, true)
+
+	collection := session.DB("winquotedata").C("stockintradaytrad")
 
 	Log("Waiting for clients")
 	for {
@@ -52,10 +71,26 @@ func handleConnection(conn net.Conn) {
 			return
 		}
 
-
 		Log(conn.RemoteAddr().String(), "receive data string:\n", string(buffer[:n]))
-		con2 :=strings.Replace(string(buffer[:n]),"\n","",0);
-		n2, err := f.WriteString(con2)
+		line1 :=strings.Replace(string(buffer[:n]),"\n","",0);
+		line2 :=strings.Replace(line1," ","",0);
+
+		Code := ""
+		Name :=""
+		CurTime :=""
+		Price :=""
+		Count :=1
+
+		err = collection.Insert(&StockIntraDayTrad{
+			Code,
+			Name,
+			CurTime,
+			Price,
+			Count,
+		})
+		check(err)
+
+		n2, err := f.WriteString(line2)
 		check(err)
 		fmt.Printf("wrote %d bytes\n", n2)
 	}
