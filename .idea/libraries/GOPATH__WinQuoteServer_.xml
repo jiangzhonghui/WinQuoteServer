@@ -26,6 +26,7 @@
       <root url="file://C:/Go/src/path" />
       <root url="file://C:/Go/src/reflect" />
       <root url="file://C:/Go/src/context" />
+      <root url="file://C:/Go/src/bin" />
       <root url="file://C:/Go/src/html" />
       <root url="file://C:/Go/src/text" />
       <root url="file://C:/Go/src/net" />
@@ -74,6 +75,7 @@
       <root url="file://C:/Go/src/path" />
       <root url="file://C:/Go/src/reflect" />
       <root url="file://C:/Go/src/context" />
+      <root url="file://C:/Go/src/bin" />
       <root url="file://C:/Go/src/html" />
       <root url="file://C:/Go/src/text" />
       <root url="file://C:/Go/src/net" />
